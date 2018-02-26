@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
+
 import { Form, Input, Icon, Button } from 'semantic-ui-react';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = { term: ''};
@@ -13,9 +17,10 @@ export default class SearchBar extends Component {
     }
 
     handleSubmit(event) {
-
+        this.props.fetchWeather(this.state.term);
+        this.setState({ term: ''});
     }
-    
+
     render() {
         return (
             <div>
@@ -26,7 +31,7 @@ export default class SearchBar extends Component {
                         icon='sun'
                         placeholder='Get a five day forecast in yoru favorite cities...' />
                     <Button
-                        onClick={(event) => this.handleSubmit(event)}
+                        onClick={event => this.handleSubmit(event)}
                         primary
                         type='submit'
                     >
@@ -37,3 +42,9 @@ export default class SearchBar extends Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(SearchBar);// passing null because this component doesn't care about state, instead it's passing a function
