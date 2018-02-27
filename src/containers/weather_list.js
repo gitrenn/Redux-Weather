@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Chart from '../components/chart';
+
 import { Header, Table } from 'semantic-ui-react';
 
 class WeatherList extends Component {
     renderWeather(cityData) {
+        const temps = cityData.list.map(weather => weather.main.temp);
+        const press = cityData.list.map(weather => weather.main.pressure);
+        const humid = cityData.list.map(weather => weather.main.humidity);
+        console.log(temps);
         return(
             <Table.Row key={cityData.city.id}>
                 <Table.Cell>{cityData.city.name}</Table.Cell>
+                <Table.Cell>
+                    <Chart data={temps} color='red' />
+                </Table.Cell>
+                <Table.Cell>
+                    <Chart data={press} color='blue' />
+                </Table.Cell>
+                <Table.Cell>
+                    <Chart data={humid} color='yellow' />
+                </Table.Cell>
             </Table.Row>
         )
     }
