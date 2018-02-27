@@ -8,6 +8,7 @@ export function fetchWeather(city) { // action is an object that always has a ty
     const url = `${ROOT_URL}&q=${city},us&appid=${API_KEY}`;
     const request = axios.get(url);
 
+    console.log('Request: ', request);
     return {
         type: FETCH_WEATHER,
         payload: request
